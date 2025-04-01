@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy 30th Birthday, Heckel!</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #1e1e2e;
+            flex-direction: column;
+            overflow: hidden;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            position: relative;
+        }
+        h1 {
+            font-size: 2.5em;
+            color: #ffcc00;
+        }
+        .balloon {
+            position: absolute;
+            width: 50px;
+            height: 70px;
+            background-color: red;
+            border-radius: 50%;
+            cursor: pointer;
+            animation: floatUp 5s linear infinite;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(100vh); opacity: 1; }
+            100% { transform: translateY(-100vh); opacity: 0; }
+        }
+        .hidden-message {
+            display: none;
+            max-width: 600px;
+            margin-top: 20px;
+            font-size: 1.1em;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 10px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            background-color: #ffcc00;
+            color: black;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Happy 30th Birthday, Heckel! 🎉</h1>
+    <p>Klik balon untuk melihat pesan spesial! 🎈</p>
+    <div id="message" class="hidden-message">
+        HAPPY BIRTHDAY HABIBIE ✨✨✨🥳🥳<br><br>
+        Aku ingin kamu tahu betapa kamu berarti dalam hidupku. Semoga setiap tahunnya semakin penuh kebahagiaan! ❤️
+    </div>
+    <button onclick="startGame()">Mainkan Mini Game 🎮</button>
+    <div class="game-container" id="game"></div>
+    
+    <audio id="bgMusic" loop>
+        <source src="birds_of_a_feather.mp3" type="audio/mpeg">
+    </audio>
+    
+    <script>
+        function createBalloon() {
+            const balloon = document.createElement("div");
+            balloon.classList.add("balloon");
+            balloon.style.left = Math.random() * 90 + "vw";
+            balloon.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 60%)`;
+            document.body.appendChild(balloon);
+            
+            balloon.addEventListener("click", () => {
+                document.getElementById("message").style.display = "block";
+                document.getElementById("bgMusic").play();
+                balloon.remove();
+            });
+            
+            setTimeout(() => balloon.remove(), 5000);
+        }
+        setInterval(createBalloon, 1000);
+        
+        function startGame() {
+            const gameContainer = document.getElementById("game");
+            gameContainer.innerHTML = "<p>Temukan hati tersembunyi! Klik hati sebanyak mungkin dalam 10 detik! ❤️</p>";
+            let score = 0;
+            let startTime = Date.now();
+
+            function createGameHeart() {
+                const heart = document.createElement("div");
+                heart.classList.add("heart");
+                heart.style.left = Math.random() * 80 + "vw";
+                heart.style.top = Math.random() * 80 + "vh";
+                document.body.appendChild(heart);
+
+                heart.addEventListener("click", () => {
+                    score++;
+                    heart.remove();
+                });
+                
+                setTimeout(() => heart.remove(), 3000);
+            }
+
+            const interval = setInterval(createGameHeart, 500);
+            setTimeout(() => {
+                clearInterval(interval);
+                alert("Game selesai! Kamu berhasil mengumpulkan " + score + " hati! ❤️");
+            }, 10000);
+        }
+    </script>
+</body>
+</html>
